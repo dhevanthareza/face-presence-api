@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import mongoose from 'mongoose'
 import { Sequelize } from 'sequelize-typescript'
 import { Dialect } from 'sequelize/types'
 import * as config from './../../../config.json'
@@ -12,5 +13,10 @@ const sequelize = new Sequelize((config as any)[process.env.NODE_ENV].database, 
   port: (config as any)[process.env.NODE_ENV].port,
 })
 
-export { sequelize }
+const mongooseConnect = async () => {
+  await mongoose.connect('mongodb+srv://dhevanthareza:dhevan007@cluster0.zpfrp.mongodb.net/facepresence?retryWrites=true&w=majority')
+  console.log('Connected to cluster0.zpfrp.mongodb.net/facepresence')
+}
+
+export { sequelize, mongooseConnect }
 

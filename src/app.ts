@@ -5,8 +5,7 @@ import moment from 'moment'
 import { resolve } from 'path'
 import 'reflect-metadata'
 import middlewareLoader from './middlewareLoader'
-import modelLoader from './modelLoader'
-import { sequelize } from './modules/core/config/database'
+import { mongooseConnect } from './modules/core/config/database'
 import { ResponseService } from './modules/core/service/response.service'
 import { RootRouter } from './router/router'
 
@@ -33,7 +32,7 @@ class App {
   }
 
   public async listen() {
-    modelLoader(sequelize)
+    await mongooseConnect()
     this.app.listen(this.app.get('port'), () => {
       console.log(`${chalk.green('✓')} server started at http://localhost:${this.app.get('port')}`)
     })

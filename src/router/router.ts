@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { MasterDataRouter } from './masterData/masterData.router';
+import { PresenceRouter } from './presence/presence.router';
+import { UserRouter } from './user/user.router';
 
 const RootRouter = Router();
-RootRouter.use('/master-data', MasterDataRouter);
+RootRouter.use('/user', UserRouter);
+RootRouter.use('/presence', PresenceRouter);
 
 export { RootRouter };
 

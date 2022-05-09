@@ -13,7 +13,8 @@
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "jwt_secret": "secret"
   },
   "production": {
     "username": "root",
@@ -21,6 +22,7 @@
     "database": "yuarsi",
     "port": "3308",
     "host": "ssh3.iris.my.id",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "jwt_secret": "secret"
   }
 }

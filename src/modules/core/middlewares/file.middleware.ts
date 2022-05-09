@@ -1,11 +1,20 @@
+import aws from 'aws-sdk';
 import { Router } from 'express';
 import multer from 'multer';
+import multerS3 from 'multer-s3';
 
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, `${__dirname}/../../../../file`);
+const s3 = new aws.S3({
+  credentials: {
+    accessKeyId: 'AKIAY6Q5NBEO25Y3LMGF',
+    secretAccessKey: `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`,
   },
-  filename(req, file, cb) {
+})
+
+const storage = multerS3({
+  s3,
+  bucket: 'face-presence',
+  acl: 'public-read',
+  key(req, file, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
@@ -29,10 +38,10 @@ const fileMiddleware = ({
         if (req.files[element.name] !== undefined) {
           const file = req.files[element.name][0];
           const fileData = {
-            name: name !== null ? name : file.originalname,
+            name: file.key,
             tag,
             access,
-            location: `/file/${file.filename}`,
+            location: file.location,
           };
           // const fileData = await FileRepository.create({
           //   name: name !== null ? name : file.originalname,
@@ -40,7 +49,7 @@ const fileMiddleware = ({
           //   access,
           //   location: `/file/${file.filename}`,
           // });
-          req[element.name] = fileData;
+          req.body[element.name] = fileData;
         }
       }),
     );

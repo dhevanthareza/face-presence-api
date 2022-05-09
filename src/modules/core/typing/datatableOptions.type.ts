@@ -1,7 +1,7 @@
-interface DataTableOptions {
+interface IDataTableOptions {
   search: string,
   limit: string,
   page: string
 }
 
-export { DataTableOptions };
+export { IDataTableOptions };
