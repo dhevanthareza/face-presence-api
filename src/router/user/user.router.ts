@@ -9,7 +9,7 @@ const UserControllerObj = new UserController()
 
 UserRouter.get('/', UserControllerObj.getAll)
 UserRouter.get('/me', isAuthenticated, asyncHandler(UserControllerObj.me))
-UserRouter.get('/datatable', UserControllerObj.datatable)
+UserRouter.get('/datatable', UserController.datatable)
 UserRouter.get('/:id', UserControllerObj.get)
 UserRouter.post('/', fileMiddleware({ fields: [{ name: 'photo', maxCount: 1 }, { name: 'cropped_photo', maxCount: 1 }] }), UserControllerObj.create)
 UserRouter.post(

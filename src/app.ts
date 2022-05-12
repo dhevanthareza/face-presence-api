@@ -41,6 +41,8 @@ class App {
   private settings() {
     this.app.set('host', '0.0.0.0')
     this.app.set('port', process.env.PORT || 8080)
+    // process.env.TZ = "Asia/Jakarta";
+    // console.log((new Date().getHours()))
   }
 }
 const server = new App()

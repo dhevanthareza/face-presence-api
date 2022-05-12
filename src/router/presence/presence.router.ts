@@ -8,13 +8,14 @@ const PresenceRouter = Router()
 const PresenceControllerObj = new PresenceController()
 
 // PresenceRouter.get('/', UserControllerObj.getAll)
-// PresenceRouter.get('/datatable', UserControllerObj.datatable)
+PresenceRouter.get('/datatable', isAuthenticated, PresenceController.datatable)
+PresenceRouter.get('/today', isAuthenticated, PresenceController.today)
 // PresenceRouter.get('/:id', UserControllerObj.get)
 PresenceRouter.post(
   '/',
   isAuthenticated,
   fileMiddleware({ fields: [{ name: 'photo', maxCount: 1 }, { name: 'cropped_photo', maxCount: 1 }] }),
-  asyncHandler(PresenceControllerObj.presence)
+  asyncHandler(PresenceController.presence)
 )
 // PresenceRouter.put('/:id', UserControllerObj.update)
 // PresenceRouter.delete('/:id', UserControllerObj.delete)

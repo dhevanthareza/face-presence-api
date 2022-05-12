@@ -13,12 +13,16 @@ class AppController {
     // const data = await AppController.repository.get(req.params.id);
     // res.json(data);
   }
-  async datatable(req: any, res: any) {
-    // const page = req.query.page || '1';
-    // const limit = req.query.limit || '15';
-    // const search = req.query.search || '';
-    // const data = await AppController.repository.datatable({ page, limit, search });
-    // res.json(data);
+  static async  datatable(req: any, res: any) {
+    console.log(req.path)
+    console.log(req.baseUrl)
+    console.log(req.originalUrl)
+    console.log(AppController.repository)
+    const page = req.query.page || '1';
+    const limit = req.query.limit || '15';
+    const search = req.query.search || '';
+    const data = await AppController.repository.datatable(req.user.id, { page, limit, search });
+    return ResponseService.success(res, data, "SUCCESS")
   }
   async getAll(req: any, res: any) {
     // const data = await AppController.repository.getAll();

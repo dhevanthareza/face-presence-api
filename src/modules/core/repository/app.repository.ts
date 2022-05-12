@@ -1,12 +1,12 @@
 import { Model } from 'mongoose';
-import { FindAndCountOptions, FindOptions } from 'sequelize';
+import { FindOptions } from 'sequelize';
 import { SequelizeOptions } from 'sequelize-typescript/dist/sequelize/sequelize/sequelize-options';
 import { IDataTableOptions } from '../typing/datatableOptions.type';
 
 interface IRepositoryOptions {
   model: Model<any>;
   canSearchField?: string[]
-  datatableOptions?: FindAndCountOptions
+  datatableOptions?: any
   getAllOptions?: FindOptions
   getOptions?: FindOptions
 }
@@ -29,11 +29,12 @@ class AppRepository {
     });
     return data
   }
-  public async datatable(
+  public static async datatable(
+    userId: String,
     datatableOptions: IDataTableOptions = { limit: '5', page: '1', search: '' },
   ) {
-    // const offset = parseInt(datatableOptions.limit, 10) * (parseInt(datatableOptions.page, 10) - 1);
-    // const limit = parseInt(datatableOptions.limit, 10);
+    const offset = parseInt(datatableOptions.limit, 10) * (parseInt(datatableOptions.page, 10) - 1);
+    const limit = parseInt(datatableOptions.limit, 10);
     // let where = {};
     // if (this.Options.canSearchField.length > 0) {
     //   where = {
@@ -47,13 +48,12 @@ class AppRepository {
     //     }),
     //   };
     // }
-    // const data = await this.Model.findAndCountAll({
-    //   offset,
-    //   limit,
-    //   where,
-    //   ...this.Options.datatableOptions
-    // });
-    // return data;
+    const query = this.Model.find({ userId }).select("-photo_feature").toConstructor()
+    const data = await (new query()).skip(offset).limit(limit).exec()
+    this.Model.find().toConstructor()
+
+    const count = await this.Model.estimatedDocumentCount()
+    return {count, result: data};
   }
   public static async getAll(options?: SequelizeOptions) {
     // const data = await this.Model.findAll({...this.Options.getAllOptions});
