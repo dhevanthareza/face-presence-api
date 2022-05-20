@@ -24,9 +24,7 @@ class PresenceRepository {
     }
     var now = new Date();
     var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const todayPresence = await PresenceModel.findOne().where('createdAt').gte(Date.parse(startOfToday.toISOString()))
-    console.log(todayPresence.id)
-    console.log(type == "IN" ? 'check_in_datetime' : 'check_out_datetime')
+    const todayPresence = await PresenceModel.findOne({ userId }).where('createdAt').gte(Date.parse(startOfToday.toISOString()))
     if (todayPresence != null) {
       await PresenceModel.updateOne({ _id: todayPresence.id }, {
         [type == "IN" ? 'check_in_datetime' : 'check_out_datetime']: Date.now(),
@@ -74,10 +72,10 @@ class PresenceRepository {
     return { count, result: data };
   }
 
-  public static async todayData() {
+  public static async todayData(userId: String) {
     var now = new Date();
     var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const todayPresence = await PresenceModel.findOne().where('createdAt').gte(Date.parse(startOfToday.toISOString())).select("-photo_feature -check_out_photo_feature")
+    const todayPresence = await PresenceModel.findOne({ userId }).where('createdAt').gte(Date.parse(startOfToday.toISOString())).select("-photo_feature -check_out_photo_feature")
     return todayPresence
   }
 

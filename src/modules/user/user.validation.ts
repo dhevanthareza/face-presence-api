@@ -21,7 +21,7 @@ const UserCreateValidations = [
     .isLength({ min: 5 })
     .withMessage('Password mminimal 5 karakter'),
   body('photo')
-    .not()
+    .not()  
     .isEmpty()
     .withMessage('Photo diperlukan'),
   body('cropped_photo')
@@ -33,7 +33,7 @@ const UserCreateValidations = [
     .isEmpty()
     .withMessage('Photo tidak valid (2)'),
   body('email').custom(async email => {
-    return UserModel.findOne({ where: { email } }).then((user: any) => {
+    return UserModel.findOne({ email }).exec().then((user: any) => {
       if (user) {
         return Promise.reject('Email sudah digunakan')
       }

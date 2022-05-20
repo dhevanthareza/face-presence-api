@@ -20,7 +20,7 @@ class PresenceController {
     return ResponseService.success(res, data, "SUCCESS")
   }
   static async today(req: any, res: any) {
-    const data = await PresenceRepository.todayData();
+    const data = await PresenceRepository.todayData(req.user.id);
     return ResponseService.success(res, data, "SUCCESS")
   }
 }
