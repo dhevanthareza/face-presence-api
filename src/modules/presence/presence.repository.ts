@@ -24,7 +24,7 @@ class PresenceRepository {
     }
     var now = new Date();
     var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const todayPresence = await PresenceModel.findOne({ userId }).where('createdAt').gte(Date.parse(startOfToday.toISOString()))
+    const todayPresence = await PresenceModel.findOne({ userId }).where('date').gte(Date.parse(startOfToday.toISOString()))
     if (todayPresence != null) {
       await PresenceModel.updateOne({ _id: todayPresence.id }, {
         [type == "IN" ? 'check_in_datetime' : 'check_out_datetime']: Date.now(),
