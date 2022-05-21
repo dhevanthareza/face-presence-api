@@ -7,6 +7,7 @@ interface IPresenceFailed {
   photo: object;
   cropped_photo: object;
   photo_feature: any[];
+  distance?: number
 }
 
 const presenceFailedSchema = new Schema<IPresenceFailed>({
@@ -15,6 +16,7 @@ const presenceFailedSchema = new Schema<IPresenceFailed>({
   type: { type: String},
   cropped_photo: { type: Object, required: true },
   photo_feature: { type: Array(), required: true },
+  distance: {type: Number, required: false},
 
 }, { timestamps: true });
 

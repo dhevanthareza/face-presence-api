@@ -18,6 +18,7 @@ class PresenceRepository {
         date: Date.now(),
         photo,
         cropped_photo,
+        distance: faceDistance,
         photo_feature: faceFeature,
       })
       throw new ApplicationError({ message: "Validasi Wajah Gagal" })
